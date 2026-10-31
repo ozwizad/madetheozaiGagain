@@ -8,6 +8,11 @@ FEEDS = [
     ("🐧 Donanım & Linux", "https://www.phoronix.com/rss.php"),
     ("💹 Teknoloji ekonomisi", "https://webrazzi.com/feed/"),
     ("📊 Veri analizi", "https://www.kdnuggets.com/feed"),
+    ("🤖 AI", "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
+    ("🤖 AI", "https://www.technologyreview.com/topic/artificial-intelligence/feed/"),
+    ("🤖 AI", "https://blog.google/innovation-and-ai/technology/ai/rss/"),
+    ("🤖 AI", "https://openai.com/news/rss.xml"),
+    ("🤖 AI", "https://importai.substack.com/feed"),
 ]
 
 MAX_NEWS = 6      # Yapay zekâ ile seçilecek haber sayısı
@@ -146,13 +151,13 @@ def pick_with_ai(items):
         f"{i} | {it['label']} | {it['title']} | {truncate(it['desc'], 300)}"
         for i, it in enumerate(items))
     prompt = (
-        f"Aşağıda numaralı haberler var (numara | kategori | başlık | açıklama). "
-        f"Veri analisti olmak isteyen, teknoloji ve ekonomiyi yeni öğrenen bir okur için "
-        f"en önemli {MAX_NEWS} haberi seç, kategoriler dengeli olsun. "
-        f"Her biri için Türkçe, sade bir başlık ve 1-2 cümlelik özet yaz. Özetlerde reklam, "
-        f"tekrar ve gereksiz detay olmasın. Anlaşılması zor bir teknik terim varsa 'terim' alanına "
-        f"'Terim: kısa açıklama' biçiminde ekle, yoksa boş bırak.\n"
-        f"Sadece şu biçimde bir JSON listesi döndür, başka hiçbir şey yazma:\n"
+        f"Below are numbered news items (number | category | title | description). "
+        f"Pick the {MAX_NEWS} most important ones for a reader who is learning about tech, "
+        f"AI, economics and data analysis. Keep the categories balanced. "
+        f"For each, write a short clear headline and a 1-2 sentence summary in English. "
+        f"No ads, repetition or unnecessary detail. If a technical term needs explaining, "
+        f"put a short 'Term: explanation' in the 'terim' field, otherwise leave it empty.\n"
+        f"Return only a JSON list in this format, nothing else:\n"
         f'[{{"id": 0, "baslik": "...", "ozet": "...", "terim": ""}}]\n\n{listing}')
     try:
         text = call_llm(prompt)
